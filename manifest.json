@@ -1,0 +1,18 @@
+{
+  "name": "TEDS ART CREATOR",
+  "short_name": "Art Creator",
+  "description": "An inspiring prompt generator that provides creative sparks for writing, visual art, and music. Powered by AI, Pocket Muse delivers concise and actionable ideas to overcome creative blocks.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#4f46e5",
+  "background_color": "#111827"
+}
