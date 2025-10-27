@@ -1,4 +1,4 @@
-# 🎨 TEDS ART CREATOR v1.0
+# 🎨 TEDS ART CREATOR
 
 TEDS ART CREATOR is a sleek, AI-powered prompt generator designed to spark creativity for visual artists. It crafts detailed, high-quality briefs suitable for any AI image generation platform (like Midjourney, DALL-E, etc.), helping to overcome creative blocks and inspire new masterpieces.
 
