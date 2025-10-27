@@ -1,12 +1,14 @@
-<div align="center">
-<img width="600" height="800" alt="GHBanner" src="ChatGPT Image Example.png" />
-</div>
+
 
 🎨 TEDS ART CREATOR
 
 TEDS ART CREATOR is a sleek, AI-powered prompt generator designed to spark creativity for visual artists. It crafts detailed, high-quality briefs suitable for any AI image generation platform (like Midjourney, DALL-E, etc.), helping to overcome creative blocks and inspire new masterpieces.
 
-![A placeholder image of the TEDS ART CREATOR user interface, showing a generated prompt card with details like Subject, Setting, and a final copyable prompt string. The app has a dark, modern theme with purple and indigo accents.](ChatGPT Image Example.png)
+![A placeholder image of the TEDS ART CREATOR user interface, showing a generated prompt card with details like Subject, Setting, and a final copyable prompt string. The app has a dark, modern theme with purple and indigo accents.]
+<div align="center">
+<img width="300" height="400" alt="GHBanner" src="ChatGPT Image Example.png" />
+</div>
+(ChatGPT Image Example.png)
 
 ---
 
