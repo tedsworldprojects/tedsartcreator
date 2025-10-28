@@ -11,7 +11,11 @@ TEDS ART CREATOR is a sleek, AI-powered prompt generator designed to spark creat
 
 Prompt: A lone, ancient-looking automaton, crafted from tarnished brass and polished wood, with glowing azure eyes, in a forgotten, overgrown Victorian greenhouse at twilight, dust motes dancing in the last light, steampunk illustration, art nouveau elegance, reminiscent of Alphonse Mucha, soft diffused backlighting from the setting sun, long dramatic shadows, muted greens, brassy golds, deep indigo, warm amber accents, medium shot, slightly low angle, intricate details, masterpiece, 8k, ultra-detailed, cinematic, professional illustration.
 </div>
+<div align="center">
+ <img width="300" height="400" alt="GHBanner" src="ChatGPT Image 2.png" />
 
+Prompt: A whimsical, chrome-plated anthropomorphic robot explorer, with glowing sapphire optical sensors and a vintage leather satchel slung over its shoulder, in a dense, bioluminescent alien jungle at twilight, with towering, exotic flora emitting soft, pulsating light and a faint, ethereal mist swirling through the air, retro-futurism, detailed concept art, inspired by Syd Mead and Moebius, painterly, illustrative quality, soft, diffused bioluminescent glow creating electric blues, vibrant purples, and deep emerald greens, contrasted by warm, aged leather tones, medium shot, eye-level perspective, slightly low angle looking up at the robot, shallow depth of field, masterpiece, 8k, ultra-detailed, cinematic, professional photography, artstation.
+</div>
 ---
 
 ## ✨ Key Features
