@@ -64,9 +64,19 @@ const App: React.FC = () => {
                     >
                         {isLoading ? 'Directing...' : 'Generate Art Prompt'}
                     </button>
-                    <p className="text-xs text-gray-500">
-                        &copy; 2025 TEDS WORLD PROJECTS Art creator v1.0
-                    </p>
+                    <div className="text-center">
+                        <p className="text-xs text-gray-500">
+                            &copy; 2025 TEDS WORLD PROJECTS Art creator v1.0
+                        </p>
+                        <a 
+                            href="https://youtube.com/@tedsworldprojects" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-xs text-indigo-400 hover:underline"
+                        >
+                            youtube.com/@tedsworldprojects
+                        </a>
+                    </div>
                 </div>
             </footer>
         </div>
