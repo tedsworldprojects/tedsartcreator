@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TEDS ART CREATOR</title>
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="./manifest.json" />
     <meta name="theme-color" content="#4f46e5" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -13,34 +13,354 @@
       body {
         font-family: 'Inter', sans-serif;
       }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-gray-900">
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
+    
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-indigo-900/40 to-gray-900 text-white flex flex-col">
+        <header class="p-6 text-center">
+            <h1 class="text-4xl md:text-5xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-500">
+                TEDS ART CREATOR
+            </h1>
+            <p class="text-gray-400 mt-2 max-w-lg mx-auto">Generate detailed, high-quality prompts.</p>
+        </header>
+        <main class="flex-grow flex items-center justify-center p-4 pb-36 md:pb-40">
+          <div id="prompt-container" class="w-full max-w-2xl">
+            <!-- Dynamic content will be injected here -->
+          </div>
+        </main>
+        <footer class="fixed bottom-0 left-0 right-0 p-4 bg-gray-900/50 backdrop-blur-sm border-t border-gray-700/50">
+            <div class="flex flex-col items-center gap-2">
+                <button
+                    id="generate-button"
+                    class="w-full max-w-sm px-8 py-4 bg-indigo-600 text-white font-bold rounded-full shadow-lg shadow-indigo-600/30 hover:bg-indigo-500 focus:outline-none focus:ring-4 focus:ring-indigo-400/50 disabled:bg-gray-600 disabled:shadow-none disabled:cursor-not-allowed transition-all duration-300 ease-in-out transform hover:scale-105 disabled:scale-100"
+                >
+                    Generate Art Prompt
+                </button>
+                <div class="text-center">
+                    <p class="text-xs text-gray-500">
+                        &copy; 2025 TEDS WORLD PROJECTS Art creator v1.0
+                    </p>
+                    <a 
+                        href="https://youtube.com/@tedsworldprojects" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="text-xs text-indigo-400 hover:underline"
+                    >
+                        youtube.com/@tedsworldprojects
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-              console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            })
-            .catch(error => {
-              console.log('ServiceWorker registration failed: ', error);
-            });
-        });
-      }
+      // --- DATA ---
+      const prompts = [
+        `### 🎨 AI Art Director's Brief
+
+**SUBJECT:** An ancient, wise cyborg owl with glowing runic patterns etched into its metallic feathers.
+
+**SETTING:** Perched on a holographic branch in a neon-drenched, cyberpunk cityscape at midnight, with rain-slicked streets below.
+
+**ARTISTIC STYLE:** Photorealistic, with influences from cyberpunk artists like Josan "Deathburger" Gonzalez and the Blade Runner film aesthetic.
+
+**LIGHTING & COLOR:** Saturated neon blues, purples, and magentas, with sharp, high-contrast backlighting from city signs. A cool, moody color palette.
+
+**COMPOSITION:** Medium close-up, Dutch angle shot, focusing on the owl's intricate details and piercing gaze.
+
+---
+
+**✨ Final Prompt (Copy & Paste):**
+Photorealistic medium close-up, Dutch angle shot of an ancient cyborg owl with glowing runic patterns on metallic feathers, perched on a holographic branch in a neon-drenched cyberpunk city at midnight, style of Josan Gonzalez and Blade Runner, saturated neon blues and purples, sharp backlighting, masterpiece, 8k, ultra-detailed, cinematic.`,
+
+        `### 🎨 AI Art Director's Brief
+
+**SUBJECT:** A majestic crystal deer, its antlers branching into intricate, fractal patterns.
+
+**SETTING:** Standing in an enchanted, bioluminescent forest at twilight, with glowing flora and shimmering particles in the air.
+
+**ARTISTIC STYLE:** Digital Painting, with a fantastical, ethereal quality reminiscent of Hayao Miyazaki's films and the art of Yoshitaka Amano.
+
+**LIGHTING & COLOR:** Soft, magical glow from the bioluminescent plants, creating a low-key lighting effect. The palette is dominated by deep blues, greens, and soft pinks.
+
+**COMPOSITION:** Full-body landscape shot from a low angle, emphasizing the deer's majestic stature against the enchanted forest background.
+
+---
+
+**✨ Final Prompt (Copy & Paste):**
+Fantastical digital painting of a majestic crystal deer with fractal antlers in an enchanted bioluminescent forest, ethereal style of Hayao Miyazaki and Yoshitaka Amano, soft magical glow, deep blues and greens, low angle full-body landscape, masterpiece, 8k, ultra-detailed.`,
+
+        `### 🎨 AI Art Director's Brief
+
+**SUBJECT:** A lone astronaut discovering a colossal, fossilized alien skeleton on a desolate desert planet.
+
+**SETTING:** A vast, windswept desert of red sand under a binary sunset, casting long, dramatic shadows.
+
+**ARTISTIC STYLE:** Cinematic Photorealism, inspired by the visual language of Denis Villeneuve's "Dune" and classic sci-fi concept art.
+
+**LIGHTING & COLOR:** Warm, low-angled light from the two suns creating a high-contrast scene. A palette of deep oranges, reds, and dark, inky shadows.
+
+**COMPOSITION:** Extreme wide shot, showcasing the immense scale of the skeleton in comparison to the tiny astronaut, using the rule of thirds.
+
+---
+
+**✨ Final Prompt (Copy & Paste):**
+Cinematic photorealism, extreme wide shot of a lone astronaut discovering a colossal alien fossil on a desolate red desert planet under a binary sunset, style of Denis Villeneuve's Dune, dramatic long shadows, high contrast, deep oranges and reds, rule of thirds, masterpiece, professional photography, 8k.`,
+
+        `### 🎨 AI Art Director's Brief
+
+**SUBJECT:** An elegant, anthropomorphic fox samurai in ornate, traditional armor.
+
+**SETTING:** Meditating under a giant, ancient cherry blossom tree during a gentle petal fall.
+
+**ARTISTIC STYLE:** Ukiyo-e woodblock print style, modernized with digital painting techniques. Influences from artists like Hokusai and Hiroshige.
+
+**LIGHTING & COLOR:** Soft, diffused daylight filtering through the cherry blossoms. A delicate color palette of pastel pinks, deep blacks, and muted golds.
+
+**COMPOSITION:** Eye-level medium shot, centered composition, creating a sense of balance and tranquility.
+
+---
+
+**✨ Final Prompt (Copy & Paste):**
+Modern Ukiyo-e digital painting of an elegant anthropomorphic fox samurai in ornate armor, meditating under an ancient cherry blossom tree, style of Hokusai, soft diffused daylight, pastel pinks and deep blacks, centered medium shot, tranquil, masterpiece, 8k, detailed illustration.`,
+
+        `### 🎨 AI Art Director's Brief
+
+**SUBJECT:** A whimsical, floating library made of interconnected hot air balloons filled with books.
+
+**SETTING:** Drifting peacefully through a fluffy, candy-colored cloudscape during a vibrant sunset.
+
+**ARTISTIC STYLE:** Studio Ghibli-inspired Anime style, characterized by its charm, detail, and hand-drawn feel.
+
+**LIGHTING & COLOR:** Warm, golden hour lighting from the setting sun, making the clouds glow. A vibrant palette of oranges, purples, pinks, and yellows.
+
+**COMPOSITION:** Dynamic wide-angle shot from below, looking up at the magnificent floating library, conveying a sense of wonder and scale.
+
+---
+
+**✨ Final Prompt (Copy & Paste):**
+Studio Ghibli anime style, a whimsical floating library of interconnected hot air balloons drifting through candy-colored clouds at sunset, warm golden hour lighting, vibrant oranges and purples, dynamic wide-angle shot from below, masterpiece, detailed illustration, 8k, breathtaking.`,
+      ];
+
+      // --- DOM ELEMENTS ---
+      const promptContainer = document.getElementById('prompt-container');
+      const generateButton = document.getElementById('generate-button');
+      
+      // --- STATE ---
+      let lastPromptIndex = -1;
+      let isLoading = false;
+
+      // --- HTML TEMPLATES ---
+      const initialStateHTML = `
+        <div class="text-center">
+          <div class="text-6xl mb-4 animate-pulse">🎨</div>
+          <h2 class="text-2xl font-bold text-gray-200">Ready to create a masterpiece?</h2>
+          <p class="text-gray-400 mt-2">Click the button below to generate a detailed prompt for your next creation.</p>
+        </div>
+      `;
+
+      const loadingSpinnerHTML = `
+        <div class="flex flex-col items-center justify-center p-8 text-center">
+          <svg class="w-12 h-12 animate-spin text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          <p class="mt-4 text-gray-300 font-medium">Contacting the muses...</p>
+        </div>
+      `;
+      
+      const createErrorStateHTML = (message) => `
+        <div class="text-center bg-red-900/50 border border-red-700 p-6 rounded-lg">
+          <div class="text-4xl mb-3">😔</div>
+          <h2 class="text-xl font-bold text-red-300">Oops! Something went wrong.</h2>
+          <p class="text-red-400 mt-2">${message}</p>
+        </div>
+      `;
+
+      const createPromptCardHTML = (prompt) => {
+        if (!prompt) return createErrorStateHTML("Could not parse the generated prompt.");
+
+        const detailItem = (label, value, icon) => {
+            return value ? `
+                <div>
+                    <h3 class="font-bold text-sm uppercase tracking-wider text-indigo-400 flex items-center gap-2 mb-1">
+                        <span class="text-lg">${icon}</span>
+                        <span>${label}</span>
+                    </h3>
+                    <p class="text-gray-200">${value}</p>
+                </div>
+            ` : '';
+        };
+        
+        // Using a unique ID for the copy button to manage its state
+        const copyButtonId = `copy-btn-${Date.now()}`;
+
+        return `
+            <div class="bg-gray-800/50 backdrop-blur-md border border-gray-700 p-6 md:p-8 rounded-xl shadow-2xl shadow-indigo-900/20 animate-fade-in space-y-5">
+                <h2 class="text-xl font-bold text-gray-100 flex items-center gap-3">
+                    <span>${prompt.title}</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    ${detailItem("Subject", prompt.subject, "👤")}
+                    ${detailItem("Setting", prompt.setting, "🏞️")}
+                    ${detailItem("Artistic Style", prompt.artisticStyle, "🎨")}
+                    ${detailItem("Lighting & Color", prompt.lightingAndColor, "💡")}
+                    ${detailItem("Composition", prompt.composition, "🖼️")}
+                </div>
+
+                <div class="border-t border-gray-700 pt-5">
+                    <h3 class="font-bold text-sm uppercase tracking-wider text-indigo-400 flex items-center gap-2 mb-2">
+                        <span class="text-lg">✨</span>
+                        <span>Final Prompt</span>
+                    </h3>
+                    <div class="bg-gray-900/70 p-4 rounded-lg border border-gray-700 flex items-center justify-between gap-4">
+                        <p class="text-gray-200 text-sm font-mono break-words flex-1">
+                            ${prompt.finalPrompt}
+                        </p>
+                        <button
+                            id="${copyButtonId}"
+                            onclick="handleCopy(this, '${btoa(encodeURIComponent(prompt.finalPrompt))}')"
+                            class="px-3 py-2 text-xs font-bold rounded-md transition-all duration-200 ease-in-out flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-500"
+                            aria-label="Copy prompt to clipboard"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+      };
+      
+      // --- LOGIC ---
+      
+      // Placed in global scope to be accessible by `onclick`
+      window.handleCopy = (buttonElement, base64Text) => {
+          if (buttonElement.disabled) return;
+          
+          try {
+            const textToCopy = decodeURIComponent(atob(base64Text));
+            navigator.clipboard.writeText(textToCopy);
+
+            // Update button state
+            buttonElement.disabled = true;
+            buttonElement.classList.remove('bg-indigo-600', 'hover:bg-indigo-500');
+            buttonElement.classList.add('bg-green-600', 'cursor-default');
+            buttonElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>Copied!</span>
+            `;
+
+            // Reset after 2 seconds
+            setTimeout(() => {
+                buttonElement.disabled = false;
+                buttonElement.classList.add('bg-indigo-600', 'hover:bg-indigo-500');
+                buttonElement.classList.remove('bg-green-600', 'cursor-default');
+                buttonElement.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>Copy</span>
+                `;
+            }, 2000);
+          } catch(err) {
+              console.error("Failed to copy text:", err);
+          }
+      };
+      
+      const parsePrompt = (markdownContent) => {
+        try {
+            const content = markdownContent.trim();
+            const result = {};
+
+            const titleMatch = content.match(/###\s*(.*)/);
+            result.title = titleMatch ? titleMatch[1].trim() : "AI Art Director's Brief";
+
+            const extractField = (fieldName) => {
+                const regex = new RegExp(`\\*\\*${fieldName}:\\*\\*\\s*([\\s\\S]*?)(?=\\n\\*\\*|---|$)`, 's');
+                const match = content.match(regex);
+                return match ? match[1].trim() : '';
+            };
+            
+            result.subject = extractField('SUBJECT');
+            result.setting = extractField('SETTING');
+            result.artisticStyle = extractField('ARTISTIC STYLE');
+            result.lightingAndColor = extractField('LIGHTING & COLOR');
+            result.composition = extractField('COMPOSITION');
+            
+            const finalPromptMatch = content.match(/\*\*✨ Final Prompt \(Copy & Paste\):\*\*\s*([\s\S]*?$)/s);
+            result.finalPrompt = finalPromptMatch ? finalPromptMatch[1].trim() : '';
+
+            if (result.subject && result.finalPrompt) {
+                 return result;
+            }
+            return null;
+        } catch (e) {
+            console.error("Failed to parse prompt:", e);
+            return null;
+        }
+      };
+
+      const generatePrompt = () => {
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * prompts.length);
+        } while (prompts.length > 1 && randomIndex === lastPromptIndex);
+        
+        lastPromptIndex = randomIndex;
+        return prompts[randomIndex];
+      };
+
+      const handleGenerateClick = () => {
+        if (isLoading) return;
+
+        // 1. Set loading state
+        isLoading = true;
+        generateButton.disabled = true;
+        generateButton.textContent = 'Generating...';
+        promptContainer.innerHTML = loadingSpinnerHTML;
+
+        // 2. Simulate network delay for better UX
+        setTimeout(() => {
+          try {
+            // 3. Generate and parse prompt
+            const newPromptMarkdown = generatePrompt();
+            const parsedPrompt = parsePrompt(newPromptMarkdown);
+
+            // 4. Render prompt card
+            promptContainer.innerHTML = createPromptCardHTML(parsedPrompt);
+          } catch (err) {
+            // 5. Render error state
+            promptContainer.innerHTML = createErrorStateHTML(err.message);
+          } finally {
+            // 6. Reset loading state
+            isLoading = false;
+            generateButton.disabled = false;
+            generateButton.textContent = 'Generate Art Prompt';
+          }
+        }, 500);
+      };
+
+      // --- INITIALIZATION ---
+      document.addEventListener('DOMContentLoaded', () => {
+        promptContainer.innerHTML = initialStateHTML;
+        generateButton.addEventListener('click', handleGenerateClick);
+      });
     </script>
-  </body>
+  <script type="module" src="/index.tsx"></script>
+</body>
 </html>
