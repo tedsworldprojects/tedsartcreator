@@ -48,6 +48,4 @@ The application is designed for simplicity and immediate results.
 
 ---
 
-## ©️ Copyright
-
-&copy; 2025 TEDS WORLD PROJECTS
+## ©️ Copyright 2025 TEDS WORLD PROJECTS
